@@ -18,7 +18,7 @@ namespace :mage do
   task :clear_cache do
     run "if [ -d #{current_path}/var/cache ] ; then rm -rf #{current_path}/var/cache/*; fi"
   end
-  desc "Rmoves magento assets cache directories content"
+  desc "Removes magento assets cache directories content"
   task :clear_media_cache do
     run "if [ -d #{current_path}/media/css ] ; then rm -rf #{current_path}/media/css/*; fi"
     run "if [ -d #{current_path}/media/js ] ; then rm -rf #{current_path}/media/js/*; fi"
