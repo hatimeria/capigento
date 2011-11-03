@@ -1,10 +1,8 @@
 load Gem.find_files('capigento.rb').last.to_s
 
-set :cache_path,          "var"
+set :shared_children,     ["media", "var/session", "system"]
 
-set :shared_children,     ["media", "downloader", "system"]
-
-set :shared_files,        ["app/etc/local.xml", "index.php", ".htaccess"]
+set :shared_files,        ["app/etc/local.xml"]
 
 set :asset_children,      []
 
@@ -22,6 +20,10 @@ namespace :mage do
   task :clear_media_cache do
     run "if [ -d #{current_path}/media/css ] ; then rm -rf #{current_path}/media/css/*; fi"
     run "if [ -d #{current_path}/media/js ] ; then rm -rf #{current_path}/media/js/*; fi"
+  end
+  desc "Removes magento session files"
+  task :clear_session do
+    run "if [ -d #{current_path}/var/session ] ; then rm -rf #{current_path}/var/session/*; fi"
   end
 end
 
@@ -48,8 +50,7 @@ namespace :deploy do
   desc "Update latest release source path."
   task :finalize_update, :except => { :no_release => true } do
     run "chmod -R g+w #{latest_release}" if fetch(:group_writable, true)
-    run "if [ -d #{latest_release}/#{cache_path} ] ; then rm -rf #{latest_release}/#{cache_path}; fi"
-    run "mkdir -p #{latest_release}/#{cache_path} && chmod -R 0777 #{latest_release}/#{cache_path}"
+    run "if [ -d #{latest_release}/var/cache ] ; then rm -rf #{latest_release}/var/cache; fi"
 
     share_childs
   end

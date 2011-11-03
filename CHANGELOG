@@ -1,3 +1,9 @@
+== 0.1.4 / Nov 3, 2011
+
+Changes in shared_children and shared_files configuration.
+Removed creating var directory and added removing var/cache directory if it was deployed
+Added command removing magento session files
+
 == 0.1.0 / Nov 2, 2011
 
 First release.
