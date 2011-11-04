@@ -49,8 +49,9 @@ namespace :deploy do
 
   desc "Update latest release source path."
   task :finalize_update, :except => { :no_release => true } do
-    run "chmod -R g+w #{latest_release}" if fetch(:group_writable, true)
-    run "if [ -d #{latest_release}/var/cache ] ; then rm -rf #{latest_release}/var/cache; fi"
+    run "chmod -R g+w #{release_path}" if fetch(:group_writable, true)
+    run "if [ -d #{release_path}/var ] ; then rm -rf #{release_path}/var; fi"
+    run "mkdir -p #{release_path}/var && chmod -R 0777 #{release_path}/var"
 
     share_childs
   end
