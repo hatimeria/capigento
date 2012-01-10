@@ -52,6 +52,8 @@ namespace :deploy do
     run "chmod -R g+w #{release_path}" if fetch(:group_writable, true)
     run "if [ -d #{release_path}/var ] ; then rm -rf #{release_path}/var; fi"
     run "mkdir -p #{release_path}/var && chmod -R 0777 #{release_path}/var"
+    run "if [ -d #{release_path}/var/cache ] ; then rm -rf #{release_path}/var/cache; fi"
+    run "mkdir -p #{release_path}/var/cache && chmod -R 0777 #{release_path}/var/cache"
 
     share_childs
   end

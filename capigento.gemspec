@@ -1,7 +1,7 @@
 Gem::Specification.new do |spec|
 
   spec.name = 'capigento'
-  spec.version = '0.1.5'
+  spec.version = '0.1.6'
   spec.platform = Gem::Platform::RUBY
   spec.description = <<-DESC
     Deployment recipe for magento applications.
