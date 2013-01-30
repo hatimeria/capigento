@@ -6,26 +6,7 @@ set :shared_files,        ["app/etc/local.xml"]
 
 set :asset_children,      []
 
-namespace :mage do
-  desc "Removes all magento cache directories content"
-  task :cc do
-    clear_cache
-    clear_media_cache
-  end
-  desc "Removes magento main cache directory content"
-  task :clear_cache do
-    run "if [ -d #{current_path}/var/cache ] ; then rm -rf #{current_path}/var/cache/*; fi"
-  end
-  desc "Removes magento assets cache directories content"
-  task :clear_media_cache do
-    run "if [ -d #{current_path}/media/css ] ; then rm -rf #{current_path}/media/css/*; fi"
-    run "if [ -d #{current_path}/media/js ] ; then rm -rf #{current_path}/media/js/*; fi"
-  end
-  desc "Removes magento session files"
-  task :clear_session do
-    run "if [ -d #{current_path}/var/session ] ; then rm -rf #{current_path}/var/session/*; fi"
-  end
-end
+set :shared_var, false
 
 namespace :deploy do
   desc "Symlink static directories and static files that need to remain between deployments."
@@ -45,15 +26,23 @@ namespace :deploy do
         run "ln -nfs #{shared_path}/#{link} #{release_path}/#{link}"
       end
     end
+    if shared_var
+      run "mkdir -p #{shared_path}/var"
+      run "if [ -d #{release_path}/var ] ; then rm -rf #{release_path}/var; fi"
+      run "ln -nfs #{shared_path}/var #{release_path}/var"
+    end
   end
 
   desc "Update latest release source path."
   task :finalize_update, :except => { :no_release => true } do
     run "chmod -R g+w #{release_path}" if fetch(:group_writable, true)
-    run "if [ -d #{release_path}/var ] ; then rm -rf #{release_path}/var; fi"
-    run "mkdir -p #{release_path}/var && chmod -R 0777 #{release_path}/var"
-    run "if [ -d #{release_path}/var/cache ] ; then rm -rf #{release_path}/var/cache; fi"
-    run "mkdir -p #{release_path}/var/cache && chmod -R 0777 #{release_path}/var/cache"
+
+    if !shared_var
+      run "if [ -d #{release_path}/var ] ; then rm -rf #{release_path}/var; fi"
+      run "mkdir -p #{release_path}/var && chmod -R 0777 #{release_path}/var"
+      run "if [ -d #{release_path}/var/cache ] ; then rm -rf #{release_path}/var/cache; fi"
+      run "mkdir -p #{release_path}/var/cache && chmod -R 0777 #{release_path}/var/cache"
+    end
 
     share_childs
   end

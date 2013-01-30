@@ -1,7 +1,7 @@
 Gem::Specification.new do |spec|
 
   spec.name = 'capigento'
-  spec.version = '0.1.6'
+  spec.version = '0.1.7'
   spec.platform = Gem::Platform::RUBY
   spec.description = <<-DESC
     Deployment recipe for magento applications.
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.bindir = "bin"
   spec.executables << "capigento"
 
-  spec.add_dependency 'capistrano', ">= 2.5.10"
+  spec.add_dependency 'capistrano', ">= 2.14.1"
 
   spec.author = "Witold Janusik"
   spec.email = "me@freakphp.com"

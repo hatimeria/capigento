@@ -6,25 +6,25 @@ def prompt_with_default(var, default, &block)
 end
 
 namespace :deploy do
-  desc "Overwrite the start task because symfony doesn't need it."
+  desc "Removed"
   task :start do ; end
 
-  desc "Overwrite the restart task because symfony doesn't need it."
+  desc "Removed"
   task :restart do ; end
 
-  desc "Overwrite the stop task because symfony doesn't need it."
+  desc "Removed"
   task :stop do ; end
   
-  desc "[Overload] We perform only update action"
+  desc "Removed"
   task :cold do
     update
   end
 
-  desc "[Overload] Removed"
+  desc "Removed"
   task :testall do
   end
 
-  desc "[Overload] Removed"
+  desc "Removed"
   task :migrate do
   end
 end
